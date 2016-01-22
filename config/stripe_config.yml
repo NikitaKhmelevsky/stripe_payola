@@ -1,0 +1,12 @@
+development_keys: &development_keys
+  secret_key:      sk_test_jUuVUBpPPspF4Axy3hLkQB31
+  publishable_key: pk_test_VfwY2C4t4qQn7w749dx8TN5S
+
+development:
+  << : *development_keys
+
+test:
+  << : *development_keys
+
+production:
+  << : *development_keys

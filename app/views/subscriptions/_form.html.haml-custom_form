@@ -1,0 +1,21 @@
+= form_tag subscriptions_path,
+  role: 'form',
+  class: 'payola-onestep-subscription-form',
+  data: { payola: { 'base-path' => payola_path, 'error-selector' => '.payola-error', 'plan-type' => plan.plan_class, 'plan-id' => plan.id } } } do
+  .form-group
+    %label Card number
+    %input.card-number.form-control{ 'data-stripe' => 'number', placeholder: '**** **** **** ****', size: '20', type: 'text' }
+  .row
+    .col-md-6
+      .form-group
+        %label Exp
+        %input.exp-date.form-control{ placeholder: 'MM / YY', size: '8', type: 'text' }
+        %input{ 'data-stripe' => 'exp_month', type: 'hidden' }
+        %input{ 'data-stripe' => 'exp_year',  type: 'hidden' }
+    .col-md-6
+      .form-group
+        %label CVC
+        %input.form-control{ 'data-stripe' => 'cvc', placeholder: '***', size: '4', type: 'text' }
+  .text-center
+    %input.btn.btn-info.btn-lg{type: 'submit', value: 'Subscribe'}
+  .alert.alert-warning.payola-error{style: 'display: none'}
