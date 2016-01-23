@@ -5,10 +5,19 @@
       %thead
         %th Avatar
         %th Name
+        %th Subscription plan
       %tbody
         %tr
           %td
             - if current_user.avatar.url.present?
               = image_tag(@user.avatar.url)
           %td= @user.full_name
+          %td
+            - if @subscription.present? && @subscription.state == 'active'
+              = @subscription.plan.name
+              = simple_form_for :subscription, method: :delete, url: payola.cancel_subscription_path(@subscription.guid) do |f|
+                = f.input :at_period_end, label: false, input_html: { name: 'at_period_end', value: false, type: 'hidden' }
+                = f.button :submit, 'Cancel Subscription', class: 'btn btn-warning btn-md'
+            - else
+              You are not subscribed to any plan
 = link_to 'Edit profile', edit_user_registration_path

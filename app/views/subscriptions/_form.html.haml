@@ -3,7 +3,7 @@
   html: { class: 'payola-onestep-subscription-form',
     data: { 'payola-base-path' => payola_path, 'payola-error-selector' => '.payola-error', 'payola-plan-type' => plan.plan_class, 'payola-plan-id' => plan.id } } do |f|
   .form-group
-    = f.input :email, label: false, input_html: { 'data-payola' => 'email' , value: current_user.email,type: 'hidden' }
+    = f.input :email, label: false, input_html: { 'data-payola' => 'email' , value: current_user.email, type: 'hidden' }
     = f.input :card_number, label: 'Card number', input_html: { class: 'card-number form-control', 'data-stripe' => 'number' , placeholder: '**** **** **** ****', size: '20', type: 'text' }
   .row
     .col-sm-6

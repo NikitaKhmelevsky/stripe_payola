@@ -10,10 +10,11 @@
           - if @subscription.nil?
             = link_to 'buy', new_plan_subscription_path(plan_id: plan.id), class: 'btn btn-success btn-large'
           - elsif @subscription.persisted?
-            - if @subscription.plan == plan
-              = form_for @subscription, url: owner_subscription_path(@owner, @subscription) do |f|
-                = f.submit t('koudoku.plan_difference.selected'), class: "btn btn-large", disabled: 'disabled'
-            - else
-              = form_for @subscription, url: owner_subscription_path(@owner, @subscription) do |f|
-                = f.hidden_field :plan_id, value: plan.id
-                = f.submit @subscription.describe_difference(plan), class: "btn btn-success btn-large"
+            - case difference = plan_difference(@subscription.plan, plan)
+            - when 'current'
+              %button.btn.btn-large{ disabled: 'disabled' } Your current plan
+            - when 'downgrade', 'upgrade'
+              = simple_form_for :subscription, url: payola.change_subscription_plan_path(@subscription) do |f|
+                = f.input :plan_class, label: false, input_html: { name: 'plan_class', value: plan.plan_class, type: 'hidden' }
+                = f.input :plan_id,    label: false, input_html: { name: 'plan_id',    value: plan.id,         type: 'hidden' }
+                = f.button :submit, difference.capitalize, class: 'btn btn-success btn-large'

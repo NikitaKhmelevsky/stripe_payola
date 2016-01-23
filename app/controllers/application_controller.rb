@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  # Payola
+  # TODO: restric access by cancancan Ability class, by patching Payola::SubscriptionController
+  def payola_can_modify_subscription?(subscription)
+    subscription.owner == current_user
+  end
 end

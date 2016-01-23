@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   before_action :correct_user,       only: [:show]
   before_action :find_user,          only: [:show]
 
-  def show; end
+  def show
+    @subscription = current_user.subscription
+  end
 
   private
 
