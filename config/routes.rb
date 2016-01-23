@@ -6,5 +6,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
   resources :users, only: [:show]
 
-  resources :subscriptions, only: [:new, :create]
+  resources :plans, only: [:index], path: 'pricing'
+
+  resources :plans, only: [] do
+    resources :subscriptions, only: [:new, :create]
+  end
 end

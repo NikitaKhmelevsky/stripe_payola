@@ -1,7 +1,8 @@
-= form_tag subscriptions_path,
+= form_tag plan_subscriptions_path,
   role: 'form',
   class: 'payola-onestep-subscription-form',
   data: { payola: { 'base-path' => payola_path, 'error-selector' => '.payola-error', 'plan-type' => plan.plan_class, 'plan-id' => plan.id } } } do
+  %input{ name: 'email', 'data-payola' => 'email', value: current_user.email, type: 'hidden' }
   .form-group
     %label Card number
     %input.card-number.form-control{ 'data-stripe' => 'number', placeholder: '**** **** **** ****', size: '20', type: 'text' }

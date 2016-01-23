@@ -1,21 +1,19 @@
 = simple_form_for :subscription,
-  url:  subscriptions_path,
+  url:  plan_subscriptions_path,
   html: { class: 'payola-onestep-subscription-form',
-    data: { payola: { 'base-path' => payola_path, 'error-selector' => '.payola-error', 'plan-type' => plan.plan_class, 'plan-id' => plan.id } } } do |f|
+    data: { 'payola-base-path' => payola_path, 'payola-error-selector' => '.payola-error', 'payola-plan-type' => plan.plan_class, 'payola-plan-id' => plan.id } } do |f|
   .form-group
-    %label Card number
-    %input.card-number.form-control{ 'data-stripe' => 'number', placeholder: '**** **** **** ****', size: '20', type: 'text' }
+    = f.input :email, label: false, input_html: { 'data-payola' => 'email' , value: current_user.email,type: 'hidden' }
+    = f.input :card_number, label: 'Card number', input_html: { class: 'card-number form-control', 'data-stripe' => 'number' , placeholder: '**** **** **** ****', size: '20', type: 'text' }
   .row
-    .col-md-6
+    .col-sm-6
       .form-group
-        %label Exp
-        %input.exp-date.form-control{ placeholder: 'MM / YY', size: '8', type: 'text' }
-        %input{ 'data-stripe' => 'exp_month', type: 'hidden' }
-        %input{ 'data-stripe' => 'exp_year', type: 'hidden' }
-    .col-md-6
+        = f.input :exp_date, label: 'Exp', input_html: { class: 'exp-date form-control', 'data-stripe' => 'text' , placeholder: 'MM / YYYY', size: '8', type: 'text' }
+        = f.input :exp_month, label: false, input_html: { 'data-stripe' => 'exp_month' , type: 'hidden' }
+        = f.input :exp_year, label: false, input_html: { 'data-stripe' => 'exp_year' ,  type: 'hidden' }
+    .col-sm-6
       .form-group
-        %label CVC
-        %input.form-control{ 'data-stripe' => 'cvc', placeholder: '***', size: '4', type: 'text' }
+        = f.input :cvc, label: 'CVC', input_html: { class: 'form-control', 'data-stripe' => 'cvc' , placeholder: '***', size: '4', type: 'text' }
   .text-center
-    %input.btn.btn-info.btn-lg{ type: 'submit', value: 'Subscribe' }
+    = f.button :submit, 'Subscribe', class: 'btn btn-info btn-md', type: 'submit'
   .alert.alert-warning.payola-error{ style: 'display: none' }

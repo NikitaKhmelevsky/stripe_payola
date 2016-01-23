@@ -59,6 +59,10 @@ gem 'simple_form'
 # payment system
 gem 'payola-payments'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-jquery.payment'
+end
+
 group :development do
   gem 'erb2haml'
   gem 'html2haml'

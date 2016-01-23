@@ -1,0 +1,19 @@
+- provide(:title, 'Pricing page')
+
+%ul
+  - @plans.each do |plan|
+    %li{ :class => 'span3 plan' }
+      .plan-info
+        %h3= plan.name
+        %h4= plan.real_price
+        .call-to-action
+          - if @subscription.nil?
+            = link_to 'buy', new_plan_subscription_path(plan_id: plan.id), class: 'btn btn-success btn-large'
+          - elsif @subscription.persisted?
+            - if @subscription.plan == plan
+              = form_for @subscription, url: owner_subscription_path(@owner, @subscription) do |f|
+                = f.submit t('koudoku.plan_difference.selected'), class: "btn btn-large", disabled: 'disabled'
+            - else
+              = form_for @subscription, url: owner_subscription_path(@owner, @subscription) do |f|
+                = f.hidden_field :plan_id, value: plan.id
+                = f.submit @subscription.describe_difference(plan), class: "btn btn-success btn-large"
